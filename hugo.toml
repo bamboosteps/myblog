@@ -1,0 +1,88 @@
+baseURL = 'https://example.org/'
+locale = 'zh-CN'
+defaultContentLanguage = 'zh-cn'
+title = '嵌入式笔记'
+theme = 'PaperMod'
+
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+[minify]
+  disableXML = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  env = "production"
+  description = "一个记录嵌入式开发、单片机与硬件调试笔记的小博客"
+  author = "博主"
+  mainSections = ["posts"]
+  DateFormat = "2006年1月2日"
+  ShowPageNums = true
+  defaultTheme = "auto"
+  disableThemeToggle = false
+  ShowShareButtons = true
+  ShowReadingTime = true
+  displayFullLangName = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  ShowToc = true
+  TocOpen = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+
+  [params.homeInfoParams]
+    Title = "嵌入式笔记"
+    Content = "记录单片机、RTOS、通信协议与硬件调试过程中的踩坑与心得。"
+    Tags = ["STM32", "FreeRTOS", "通信协议", "调试", "裸机", "工具"]
+
+  [[params.socialIcons]]
+    name = "github"
+    title = "GitHub"
+    url = "https://github.com/"
+
+  [[params.socialIcons]]
+    name = "rss"
+    title = "RSS"
+    url = "index.xml"
+
+[[menu.main]]
+  identifier = "posts"
+  name = "文章"
+  url = "/posts/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "archives"
+  name = "归档"
+  url = "/archives/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "search"
+  name = "搜索"
+  url = "/search/"
+  weight = 30
+
+[[menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 40
+
+[markup]
+  [markup.highlight]
+    # noClasses = false 让 chroma 只输出 class 名，配色由
+    # assets/css/extended/40-code.css 接管（主题的 chroma-styles.css 是静态文件，
+    # 不由 style 生成，所以这里不设 style）
+    noClasses = false
+    codeFences = true
+    guessSyntax = true
+    lineNos = false

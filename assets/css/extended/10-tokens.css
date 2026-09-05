@@ -1,0 +1,139 @@
+/* ==========================================================================
+   10-tokens.css — 调色板 / 字体栈 / 尺度变量
+   PaperMod 把 assets/css/extended/*.css 拼在所有主题 CSS 之后，
+   所以这里重新声明 :root 变量即可覆盖 theme-vars.css，无需 !important。
+   ========================================================================== */
+
+:root {
+  /* ---- 表面 ---- */
+  --theme: #faf9f7;          /* 页面底色：暖米白 */
+  --entry: #ffffff;          /* 卡片 */
+
+  /* ---- 文字 ---- */
+  --primary: #1c1917;        /* 最强文字 */
+  --ink-head: #1e3a5f;       /* 标题：深蓝 */
+  --content: #33302c;        /* 正文：暖深灰，比纯黑柔和 */
+  --secondary: #6b6560;      /* meta / 次要文字 */
+
+  /* ---- 线与浅色表面 ----
+     注意 --code-bg 是主题里的「通用浅色表面」token：
+     inline code、.post-tags、.paginav、.share-buttons 都吃它，
+     所以它不能被当成代码块专用色，代码块另用 --code-block-bg。 */
+  --border: #ebe6de;
+  --tertiary: #e6e1d9;
+  --code-bg: #f2efe9;
+  --code-block-bg: #f7f5f1;
+
+  /* ---- 强调色 ---- */
+  --accent: #c2410c;         /* 砖橙 */
+  --accent-ink: #9a3412;
+  --accent-soft: #fdf0e9;
+
+  /* ---- 尺度 ---- */
+  --radius: 10px;
+  --content-gap: 26px;
+  --nav-width: 880px;        /* 原 1024px：masthead 比内容宽，视觉错位 */
+
+  /* ---- 阴影（卡片靠它分层，不用边框） ---- */
+  --shadow-sm: 0 1px 2px rgba(28, 25, 23, .05), 0 2px 8px rgba(28, 25, 23, .04);
+  --shadow-md: 0 4px 12px rgba(28, 25, 23, .08), 0 12px 28px rgba(28, 25, 23, .06);
+
+  /* ---- 字体栈：仅系统字体，不加载任何网络字体 ----
+     关键规则：栈中间绝不能出现裸的 `serif` 泛型。
+     否则 Windows 会用 serif 泛型解析 CJK → 落到系统最后手段 → 正好是 SimSun
+     （无粗体，大字号会被合成假粗），从后门拿到我们想避开的字体。
+     所有栈一律以 sans-serif / monospace 收尾，CJK 字体名全部排在泛型之前。 */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei",
+    "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+
+  /* 拉丁走 Georgia，CJK 按平台逐级回退：
+     macOS → Songti SC（真宋体，有 Bold）
+     Linux → Noto Serif CJK SC
+     Windows → 微软雅黑（Windows 没有可用的系统 CJK 衬线，雅黑远好过假粗 SimSun） */
+  --font-serif:
+    Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, Cambria,
+    "Times New Roman", Times,
+    "Songti SC", STSong,
+    "Source Han Serif SC", "Noto Serif CJK SC",
+    "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei",
+    sans-serif;
+
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Cascadia Mono",
+    "Liberation Mono", "DejaVu Sans Mono",
+    "Microsoft YaHei", "PingFang SC", monospace;
+
+  /* meta / 日期行专用：拉丁+数字为主，用 Georgia 的老式数字做编辑感细节 */
+  --font-meta:
+    Georgia, "Palatino Linotype", Cambria, "Times New Roman",
+    "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   暗色
+   ========================================================================== */
+
+:root[data-theme="dark"] {
+  --theme: #1a1816;
+  --entry: #24211d;
+
+  --primary: #f0ece5;
+  --ink-head: #ede7dd;       /* 暗色下标题不能用深蓝，改暖白 */
+  --content: #cdc6bb;
+  --secondary: #9a9287;
+
+  --border: #322d27;
+  --tertiary: #3a352e;
+  --code-bg: #2a251f;
+  --code-block-bg: #201d19;
+
+  --accent: #f97316;
+  --accent-ink: #fb923c;
+  --accent-soft: rgba(249, 115, 22, .14);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3), 0 2px 8px rgba(0, 0, 0, .22);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .38), 0 12px 28px rgba(0, 0, 0, .3);
+
+  color-scheme: dark;
+}
+
+/* 无 JS 场景：主题的 FOUC 脚本不会跑，data-theme 停在 "auto"，
+   所有 [data-theme="dark"] 规则都不生效 —— 用户会拿到主题 noscript 的暗背景
+   配我们的浅色 token，对比度极低。这里补一份。
+   （JS 正常时 data-theme 已被改写成 light/dark，本块不会匹配，无冲突。） */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --theme: #1a1816;
+    --entry: #24211d;
+
+    --primary: #f0ece5;
+    --ink-head: #ede7dd;
+    --content: #cdc6bb;
+    --secondary: #9a9287;
+
+    --border: #322d27;
+    --tertiary: #3a352e;
+    --code-bg: #2a251f;
+    --code-block-bg: #201d19;
+
+    --accent: #f97316;
+    --accent-ink: #fb923c;
+    --accent-soft: rgba(249, 115, 22, .14);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3), 0 2px 8px rgba(0, 0, 0, .22);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, .38), 0 12px 28px rgba(0, 0, 0, .3);
+
+    color-scheme: dark;
+  }
+}
+
+/* 主题的 theme-vars.css 给列表页单独上了 --code-bg 底色，
+   导致列表页和文章页底色不一致。统一成 --theme。
+   特异性 (0,1,1) > 主题的 .list (0,1,0)。 */
+body.list {
+  background: var(--theme);
+}
