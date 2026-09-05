@@ -1,0 +1,58 @@
+{{- /* Overrides PaperMod's home_info.html to add a topic-tag row and a
+       section label. The theme file lives at
+       themes/PaperMod/layouts/_partials/home_info.html (a submodule, untouched).
+
+       The `first-entry` class is deliberately omitted here: it brings
+       min-height:320px, justify-content:center, and an overflow:hidden plus
+       line-clamp:3 on .first-entry .entry-header, which would clip the
+       descenders off the hero title.
+       The `home-info` class is kept, because
+       .home-info .entry-content { -webkit-line-clamp: unset } is what stops the
+       intro line from being clamped to two lines. */ -}}
+{{- with site.Params.homeInfoParams }}
+<article class="home-info home-hero">
+  <header class="entry-header">
+    <h1>{{ .Title | markdownify }}</h1>
+  </header>
+
+  <div class="entry-content md-content">
+    {{- $opts := dict "display" "block" }}
+    {{- .Content | $.Page.RenderString $opts }}
+  </div>
+
+  {{- with .Tags }}
+  <nav class="hero-tags" aria-label="主题标签">
+    {{- range . }}
+      {{- /* Resolve the real term page via site.GetPage, with an else branch:
+             a mistyped tag, or one removed from every post, renders as an inert
+             span instead of shipping a link to a 404.
+             Do not wrap this in urlize: it percent-encodes CJK tags into
+             %e9%80%9a... which no longer matches the term page path.
+             GetPage handles case normalization itself (STM32 -> /tags/stm32/). */ -}}
+      {{- with site.GetPage (printf "/tags/%s" .) }}
+    <a class="pill" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{- else }}
+    <span class="pill pill-static">{{ . }}</span>
+      {{- end }}
+    {{- end }}
+  </nav>
+  {{- end }}
+
+  <footer class="entry-footer hero-actions">
+    {{- range site.Params.socialIcons }}
+    <a class="hero-btn" href="{{ trim .url " " | safeURL }}" target="_blank"
+       rel="noopener noreferrer me" title="{{ .title | default (title .name) }}">
+      {{ partial "svg.html" . }}
+      <span>{{ .title | default (title .name) }}</span>
+    </a>
+    {{- end }}
+    <a class="hero-btn hero-btn-primary" href="{{ "posts/" | relLangURL }}">
+      <span>浏览全部文章</span>
+    </a>
+  </footer>
+</article>
+
+{{- /* Emitted as a second root element so it becomes a sibling of the hero
+       under .main, where the grid rule spans it across both columns. */ -}}
+<h2 class="section-label"><span>最新文章</span></h2>
+{{- end -}}

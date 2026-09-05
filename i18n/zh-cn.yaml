@@ -1,5 +1,6 @@
-# Hugo 的语言键是 zh-cn（由 defaultContentLanguage 决定），不会自动回退到主题的 zh.yaml，
-# 所以这里按 zh-cn 复制一份。内容与 themes/PaperMod/i18n/zh.yaml 一致。
+# The language key is zh-cn (set by defaultContentLanguage) and Hugo does not
+# fall back to the theme's zh.yaml, so this is a zh-cn copy of it.
+# Contents match themes/PaperMod/i18n/zh.yaml.
 - id: prev_page
   translation: "上一页"
 

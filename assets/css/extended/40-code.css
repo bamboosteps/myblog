@@ -1,0 +1,188 @@
+/* ==========================================================================
+   40-code.css - code block colors (light in light mode, unchanged in dark)
+
+   The theme's chroma-styles.css is a static committed file (catppuccin
+   macchiato); it is NOT generated from markup.highlight.style in hugo.toml,
+   so changing that setting has no effect.
+   This file wins on source order instead: extended CSS is concatenated last,
+   so at equal specificity these rules beat the theme's. No !important and no
+   [data-theme] scoping are needed for the light case.
+   ========================================================================== */
+
+:root {
+  --ch-fg:      #24292f;   /* untokenized chars: plain fences, punctuation, ws */
+  --ch-comment: #6a737d;
+  --ch-kw:      #cf222e;
+  --ch-fn:      #8250df;
+  --ch-op:      #0550ae;
+  --ch-ns:      #0550ae;
+  --ch-class:   #953800;
+  --ch-var:     #953800;
+  --ch-str:     #0a3069;
+  --ch-num:     #0550ae;
+  --ch-err:     #82071e;
+  --ch-lineno:  #8c959f;
+  --ch-hl-bg:   #fff8c5;
+  --ch-del:     #82071e;
+  --ch-del-bg:  #ffebe9;
+  --ch-ins:     #116329;
+  --ch-ins-bg:  #dafbe1;
+  --code-border: var(--border);
+}
+
+/* Dark reuses the theme's current catppuccin-macchiato values, so dark mode
+   code blocks look exactly as they did before this redesign. */
+:root[data-theme="dark"] {
+  --ch-fg:      #cad3f5;
+  --ch-comment: #6e738d;
+  --ch-kw:      #c6a0f6;
+  --ch-fn:      #8aadf4;
+  --ch-op:      #91d7e3;
+  --ch-ns:      #8bd5ca;
+  --ch-class:   #eed49f;
+  --ch-var:     #f4dbd6;
+  --ch-str:     #a6da95;
+  --ch-num:     #f5a97f;
+  --ch-err:     #ed8796;
+  --ch-lineno:  #8087a2;
+  --ch-hl-bg:   #474733;
+  --ch-del:     #ed8796;
+  --ch-del-bg:  #363a4f;
+  --ch-ins:     #a6da95;
+  --ch-ins-bg:  #363a4f;
+  --code-border: transparent;
+}
+
+/* No-JS dark, matching the block in 10-tokens.css */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --ch-fg:      #cad3f5;
+    --ch-comment: #6e738d;
+    --ch-kw:      #c6a0f6;
+    --ch-fn:      #8aadf4;
+    --ch-op:      #91d7e3;
+    --ch-ns:      #8bd5ca;
+    --ch-class:   #eed49f;
+    --ch-var:     #f4dbd6;
+    --ch-str:     #a6da95;
+    --ch-num:     #f5a97f;
+    --ch-err:     #ed8796;
+    --ch-lineno:  #8087a2;
+    --ch-hl-bg:   #474733;
+    --ch-del:     #ed8796;
+    --ch-del-bg:  #363a4f;
+    --ch-ins:     #a6da95;
+    --ch-ins-bg:  #363a4f;
+    --code-border: transparent;
+  }
+}
+
+/* ---- token colors, grouped (14 rules instead of 84 flat hardcoded ones) -- */
+
+.bg,
+.chroma                                             { color: var(--ch-fg); }
+.chroma .err, .chroma .gr, .chroma .gt              { color: var(--ch-err); }
+.chroma .k,  .chroma .kp, .chroma .kr,
+.chroma .kd, .chroma .kt, .chroma .sa               { color: var(--ch-kw); }
+.chroma .kn, .chroma .ni, .chroma .sr               { color: var(--ch-ns); }
+.chroma .na, .chroma .nf, .chroma .fm,
+.chroma .se, .chroma .dl                            { color: var(--ch-fn); }
+.chroma .nd                                         { color: var(--ch-fn); font-weight: 600; }
+.chroma .nb, .chroma .bp, .chroma .nl               { color: var(--ch-op); }
+.chroma .o,  .chroma .ow                            { color: var(--ch-op); font-weight: 600; }
+.chroma .nc, .chroma .no                            { color: var(--ch-class); }
+.chroma .nv, .chroma .vc, .chroma .vg,
+.chroma .vi, .chroma .vm                            { color: var(--ch-var); }
+.chroma .s,  .chroma .sb, .chroma .sc, .chroma .s2,
+.chroma .si, .chroma .sx, .chroma .s1, .chroma .ss  { color: var(--ch-str); }
+.chroma .kc, .chroma .ne, .chroma .nn, .chroma .py,
+.chroma .m,  .chroma .mb, .chroma .mf, .chroma .mh,
+.chroma .mi, .chroma .il, .chroma .mo               { color: var(--ch-num); }
+.chroma .gh, .chroma .gu                            { color: var(--ch-num); font-weight: 600; }
+
+/* No font-style: italic on comments. Comments in this blog are mostly CJK,
+   which would be synthetically obliqued and look bad. Color alone is enough. */
+.chroma .c,  .chroma .ch, .chroma .cm, .chroma .c1,
+.chroma .cs, .chroma .cp, .chroma .cpf,
+.chroma .sd, .chroma .sh                            { color: var(--ch-comment); font-style: normal; }
+
+/* Line numbers, line highlight and diff markers are hardcoded dark values in
+   the theme and are unreadable on a light block. */
+.chroma .lnt, .chroma .ln                           { color: var(--ch-lineno); }
+.chroma .hl  { background-color: var(--ch-hl-bg); }
+.chroma .gd  { color: var(--ch-del); background-color: var(--ch-del-bg); }
+.chroma .gi  { color: var(--ch-ins); background-color: var(--ch-ins-bg); }
+
+/* ---- block chrome ------------------------------------------------------- */
+
+/* This is the single most important rule in the redesign: md-content.css
+   hardcodes the code text color to rgb(213, 213, 214). Once the background
+   goes light, every untokenized character (plain fences, punctuation,
+   whitespace, .n) is light grey on light grey and becomes invisible. */
+.md-content pre code {
+  color: var(--ch-fg);
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  line-height: 1.75;
+  padding: 14px 16px;
+  word-break: normal;        /* theme uses break-all, which splits identifiers */
+}
+
+.md-content .highlight:not(table) {
+  border: 1px solid var(--code-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---- inline code -------------------------------------------------------- */
+
+.post-content code {
+  font-family: var(--font-mono);
+  font-size: .84em;
+  background: var(--code-bg);
+  color: var(--accent-ink);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: .12rem .36rem;
+}
+
+/* Inline code inside headings and links follows its container's color */
+.post-content a code,
+.post-content h1 code, .post-content h2 code,
+.post-content h3 code, .post-content h4 code {
+  color: inherit;
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Do not apply inline-code styling inside code blocks */
+.post-content pre code {
+  background: none;
+  border: 0;
+  font-size: 14.5px;
+}
+
+/* ---- copy button: the theme hardcodes a dark chip, which reads as a grey
+        blob on a light code block --------------------------------------- */
+
+.copy-code {
+  top: 8px;
+  right: 8px;
+  color: var(--secondary);
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 9px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.copy-code:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] .copy-code {
+  color: rgba(255, 255, 255, .85);
+  background: rgba(78, 78, 78, .9);
+  border-color: transparent;
+}

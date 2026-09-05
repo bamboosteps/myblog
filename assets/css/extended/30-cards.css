@@ -1,0 +1,236 @@
+/* ==========================================================================
+   30-cards.css - post cards, two-column grid, home hero
+   ========================================================================== */
+
+/* ---- cards: no borders, layered with shadows ---------------------------- */
+
+.post-entry {
+  background: var(--entry);
+  border: 0;
+  border-radius: var(--radius);
+  padding: 24px 26px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.post-entry:hover,
+.post-entry:focus-within {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;   /* neutralize the theme's hover border color */
+}
+
+.entry-header h2 {
+  color: var(--ink-head);
+  transition: color .2s ease;
+}
+
+.post-entry:hover .entry-header h2 {
+  color: var(--accent);
+}
+
+.entry-content {
+  color: var(--secondary);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-top: 10px;
+}
+
+.entry-footer {
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+/* ---- two-column grid ----------------------------------------------------
+   Scoped with :has(.post-entry) rather than body.list, because body.list also
+   covers the archives and search pages. Turning those into grids would disturb
+   their spacing: grid items do not collapse margins, and gap stacks on top of
+   existing margins. */
+
+body:has(.post-entry) {
+  --main-width: 880px;
+}
+
+body:has(.post-entry) .main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  /* Critical: .main has min-height: calc(100vh - ...), and a grid container's
+     default align-content behaves as stretch, which would inflate the rows to
+     fill the viewport (very visible when there are few posts).
+     align-items cannot fix this: it aligns an item within its row rather than
+     sizing the rows themselves. */
+  align-content: start;
+  gap: 28px var(--gap);
+}
+
+@media screen and (min-width: 900px) {
+  body:has(.post-entry) .main {
+    /* minmax(0, 1fr) rather than 1fr: 1fr means minmax(auto, 1fr), and the auto
+       minimum is min-content, so long identifiers such as HAL_GPIO_TogglePin in
+       a summary would blow the track out. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Hero, page header, section label and pagination span the full row */
+body:has(.post-entry) .main > :not(.post-entry) {
+  grid-column: 1 / -1;
+}
+
+/* Spacing is owned by the grid gap now */
+body:has(.post-entry) .post-entry {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* At half width a 2-line clamp is about 24 CJK characters, which truncates
+   mid-thought. Three lines fills the card and cuts height variance. */
+body:has(.post-entry) .entry-content {
+  -webkit-line-clamp: 3;
+  overflow-wrap: anywhere;
+}
+
+/* Align the meta lines of cards sitting in the same row */
+body:has(.post-entry) .entry-footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* ---- home hero ---------------------------------------------------------- */
+
+.home-hero {
+  padding: 40px 0 4px;
+  background: none;
+  box-shadow: none;
+  border: 0;
+}
+
+.home-hero .entry-header h1 {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: .005em;
+  color: var(--ink-head);
+}
+
+.home-hero .entry-content {
+  font-size: 17.5px;
+  line-height: 1.8;
+  color: var(--secondary);
+  margin-top: 14px;
+  max-width: 34em;
+  -webkit-line-clamp: unset;
+}
+
+/* ---- topic pills -------------------------------------------------------- */
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  transition: background .18s ease, color .18s ease;
+}
+
+.pill:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.pill-static {
+  opacity: .55;
+}
+
+/* ---- hero buttons ------------------------------------------------------- */
+
+.home-hero .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  font-size: 15px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--entry);
+  box-shadow: var(--shadow-sm);
+  color: var(--primary);
+  font-family: var(--font-meta);
+  transition: color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.hero-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.hero-btn:hover {
+  color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-btn-primary {
+  background: var(--ink-head);
+  color: var(--on-ink);
+  box-shadow: none;
+}
+
+.hero-btn-primary:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ---- section label above the post list ---------------------------------- */
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0 -4px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  color: var(--secondary);
+}
+
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ---- reduced motion -----------------------------------------------------
+   The theme's zmedia.css only clears transforms on :active, not on :hover. */
+
+@media (prefers-reduced-motion: reduce) {
+  .post-entry,
+  .post-entry:hover,
+  .post-entry:focus-within,
+  .pill,
+  .hero-btn,
+  .searchResults li:hover {
+    transform: none;
+    transition: none;
+  }
+}

@@ -41,7 +41,7 @@ buildExpired = false
   [params.homeInfoParams]
     Title = "嵌入式笔记"
     Content = "记录单片机、RTOS、通信协议与硬件调试过程中的踩坑与心得。"
-    Tags = ["STM32", "FreeRTOS", "通信协议", "调试", "裸机", "工具"]
+    Tags = ["STM32", "FreeRTOS", "通信协议", "调试", "裸机", "工具", "各类单片机", "硬件设计"]
 
   [[params.socialIcons]]
     name = "github"
@@ -79,9 +79,10 @@ buildExpired = false
 
 [markup]
   [markup.highlight]
-    # noClasses = false 让 chroma 只输出 class 名，配色由
-    # assets/css/extended/40-code.css 接管（主题的 chroma-styles.css 是静态文件，
-    # 不由 style 生成，所以这里不设 style）
+    # noClasses = false makes chroma emit class names only; the palette is
+    # owned by assets/css/extended/40-code.css. No `style` is set here because
+    # the theme's chroma-styles.css is a static file rather than generated
+    # from that setting, so `style` would have no effect.
     noClasses = false
     codeFences = true
     guessSyntax = true

@@ -1,0 +1,296 @@
+/* ==========================================================================
+   20-base.css - body typography, heading scale, masthead, footer, prose
+   ========================================================================== */
+
+body {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--content);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- headings ----------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;             /* not 700: YaHei Bold is too heavy at 40px */
+  font-synthesis-weight: none;  /* refuse synthetic bold when a face lacks one */
+  line-height: 1.35;            /* reset.css uses 1.2, too tight for CJK */
+  letter-spacing: .01em;
+  color: var(--ink-head);
+  text-wrap: pretty;
+}
+
+.post-title,
+.page-header h1 {
+  font-size: 38px;
+  margin-bottom: 6px;
+}
+
+.entry-header h2 {
+  font-size: 21px;
+}
+
+/* ---- meta and date lines: Georgia old-style figures, zero-risk detail ---- */
+
+.entry-footer,
+.post-meta,
+.archive-meta,
+.archive-count,
+.breadcrumbs,
+.paginav .title {
+  font-family: var(--font-meta);
+  font-feature-settings: "onum" 1;
+  letter-spacing: .02em;
+}
+
+/* ---- links -------------------------------------------------------------- */
+
+a {
+  transition: color .18s ease;
+}
+
+.post-content a {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .25em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.post-content a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+/* ---- masthead: sticky with a frosted backdrop --------------------------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--theme) 92%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo a {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--ink-head);
+  letter-spacing: .02em;
+}
+
+.logo a:hover {
+  color: var(--accent);
+}
+
+.menu a {
+  position: relative;
+  font-size: 15px;
+  color: var(--secondary);
+  padding-inline: 10px;
+}
+
+.menu a:hover {
+  color: var(--accent);
+}
+
+/* Sliding underline on menu items */
+.menu li a > span::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 14px;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .22s ease;
+}
+
+.menu li a:hover > span::after,
+.menu li a > span.active::after {
+  transform: scaleX(1);
+}
+
+/* Replace the theme's own active underline with the one above */
+.menu .active {
+  color: var(--ink-head);
+  font-weight: 600;
+  border-bottom: 0;
+}
+
+.theme-toggle svg {
+  color: var(--secondary);
+}
+
+.theme-toggle:hover svg {
+  color: var(--accent);
+}
+
+/* ---- prose -------------------------------------------------------------- */
+
+.post-content {
+  line-height: 1.85;
+}
+
+.post-content h2 {
+  font-size: 27px;
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-content h3 {
+  font-size: 21px;
+  margin: 34px 0 12px;
+}
+
+/* Theme bug: md-content.css sets h4 to 16px, smaller than body copy, so an
+   h4 reads as a caption. */
+.post-content h4 {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 26px 0 10px;
+}
+
+.post-content p {
+  margin: 18px 0;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: 18px 0;
+  padding-inline-start: 1.4em;
+}
+
+.post-content li {
+  margin: 8px 0;
+}
+
+.post-content li::marker {
+  color: var(--accent);
+}
+
+/* Blockquote: the theme uses a .3rem near-black slab, too heavy here.
+   No italic, because CJK text would be synthetically obliqued. */
+.md-content blockquote {
+  margin: 24px 0;
+  padding: 4px 0 4px 18px;
+  border-inline-start: 3px solid var(--accent);
+  color: var(--secondary);
+  font-style: normal;
+}
+
+.md-content blockquote p {
+  margin: 8px 0;
+}
+
+.md-content hr {
+  height: 1px;
+  margin: 44px 0;
+  background: var(--border);
+}
+
+.post-content img {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tables: horizontal rules only. Full gridlines are the least editorial
+   table style there is. */
+.post-content table {
+  display: block;
+  overflow-x: auto;          /* scroll on narrow screens instead of overflowing */
+  width: 100%;
+  margin: 26px 0;
+  border-collapse: collapse;
+  font-size: 15.5px;
+}
+
+.post-content table th,
+.post-content table td {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 11px 14px;
+  text-align: start;
+}
+
+.post-content table th {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--ink-head);
+  white-space: nowrap;
+  border-bottom: 2px solid var(--tertiary);
+}
+
+.post-content table tr:last-child td {
+  border-bottom: 0;
+}
+
+.post-content table tbody tr:hover {
+  background: var(--code-bg);
+}
+
+/* ---- pagination: the theme ships a solid dark slug, too heavy here ------ */
+
+.pagination a {
+  color: var(--secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  font-family: var(--font-meta);
+  font-size: 14px;
+  transition: all .2s ease;
+}
+
+.pagination a:hover {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---- footer ------------------------------------------------------------- */
+
+.footer {
+  margin-top: 20px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-meta);
+  font-size: 13px;
+  color: var(--secondary);
+}
+
+.footer a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+
+/* The theme hardcodes var(--primary) on .footer a:hover and .top-link:hover,
+   so it has to be restated at (0,2,0) to win. */
+.footer a:hover,
+.footer a:hover:visited {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- back-to-top: theme uses var(--tertiary), nearly invisible on a
+        light page ------------------------------------------------------- */
+
+.top-link {
+  background: var(--entry);
+  box-shadow: var(--shadow-md);
+  color: var(--secondary);
+  filter: none;               /* neutralize the theme's drop-shadow(0 0 0 ...) */
+  padding: 12px;
+}
+
+.top-link:hover,
+.top-link:hover svg {
+  color: var(--accent);
+}

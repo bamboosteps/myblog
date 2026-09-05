@@ -1,0 +1,317 @@
+/* ==========================================================================
+   50-pages.css - single post details, archives, taxonomy, search
+   ========================================================================== */
+
+/* ---- post header -------------------------------------------------------- */
+
+.post-header {
+  margin-bottom: 30px;
+}
+
+.breadcrumbs {
+  font-size: 13.5px;
+  color: var(--secondary);
+  margin-bottom: 10px;
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+
+.post-meta {
+  font-size: 13.5px;
+  color: var(--secondary);
+}
+
+.post-description {
+  color: var(--secondary);
+  font-size: 16px;
+}
+
+/* ---- sidebar TOC layout ------------------------------------------------- */
+
+.post-body.has-toc {
+  display: flex;
+}
+
+.toc-sidebar {
+  flex: none;
+  width: 0;
+  overflow: visible;
+}
+
+nav.toc {
+  position: sticky;
+  top: 80px;
+  width: 200px;
+  margin-left: 32px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.toc-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-head);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: .05em;
+}
+
+.toc .inner ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.toc .inner ul ul {
+  padding-left: 14px;
+}
+
+.toc .inner li {
+  margin: 0;
+}
+
+.toc a {
+  display: block;
+  padding: 4px 0;
+  color: var(--secondary);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  transition: color .18s ease, border-color .18s ease;
+}
+
+.toc a:hover {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+@media (max-width: 1100px) {
+  .post-body.has-toc {
+    display: block;
+  }
+
+  .toc-sidebar {
+    width: auto;
+    margin-bottom: 24px;
+  }
+
+  nav.toc {
+    position: static;
+    width: auto;
+    margin-left: 0;
+    max-height: none;
+    overflow-y: visible;
+    padding: 14px 18px;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* ---- post footer tags --------------------------------------------------- */
+
+.post-tags a {
+  border-radius: 999px;
+  border: 0;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 13.5px;
+  padding: 5px 14px;
+  transition: background .18s ease, color .18s ease;
+}
+
+.post-tags a:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ---- prev / next -------------------------------------------------------- */
+
+/* The theme puts a --code-bg fill plus a border on the .paginav and
+   .share-buttons containers themselves. The inner elements are already
+   layered with shadows here, so the outer frame has to go or it reads as a
+   box inside a box. */
+.paginav {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  gap: 12px;
+}
+
+.paginav a {
+  background: var(--entry);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius);
+  transition: box-shadow .2s ease, color .2s ease;
+}
+
+.paginav a:hover {
+  background: var(--entry);
+  box-shadow: var(--shadow-md);
+}
+
+.paginav .title {
+  color: var(--secondary);
+  letter-spacing: .12em;
+  font-size: 12px;
+}
+
+.paginav .prev:hover span:last-child,
+.paginav .next:hover span:last-child {
+  color: var(--accent);
+}
+
+/* ---- share buttons ------------------------------------------------------ */
+
+.share-buttons {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  padding: 18px 0 0;
+  margin-top: 14px;
+}
+
+.share-buttons a svg {
+  color: var(--secondary);
+  transition: transform .18s ease, color .18s ease;
+}
+
+.share-buttons a:hover svg {
+  transform: translateY(-2px);
+  color: var(--accent);
+}
+
+/* ---- archives ----------------------------------------------------------- */
+
+.archive-year {
+  margin-top: 44px;
+}
+
+.archive-year:not(:last-of-type) {
+  border-bottom: 1px solid var(--border);   /* theme uses 2px, reads heavy */
+}
+
+.archive-year-header {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  color: var(--ink-head);
+}
+
+.archive-count {
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+.archive-month-header {
+  font-family: var(--font-meta);
+  color: var(--secondary);
+  font-size: 15px;
+  min-width: 200px;
+}
+
+.archive-entry {
+  position: relative;
+  padding: 12px 14px;
+  margin: 6px 0;
+  border-radius: 8px;
+  transition: background .18s ease;
+}
+
+.archive-entry:hover {
+  background: var(--code-bg);
+}
+
+.archive-entry-title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink-head);
+  margin: 0;
+}
+
+.archive-entry:hover .archive-entry-title {
+  color: var(--accent);
+}
+
+.archive-meta {
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+/* ---- taxonomy index ----------------------------------------------------- */
+
+.terms-tags a {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border-radius: 999px;
+  box-shadow: none;
+  font-weight: 500;
+  transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.terms-tags a:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ---- search ------------------------------------------------------------- */
+
+#searchbox input {
+  font-family: var(--font-sans);
+  font-weight: 400;                       /* theme ships bold */
+  font-size: 16px;
+  padding: 12px 16px;
+  background: var(--entry);
+  border: 1px solid var(--border);        /* theme ships a 2px grey box */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  color: var(--content);
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+#searchbox input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+#searchResults {
+  margin-top: 18px;
+}
+
+#searchResults li {
+  background: var(--entry);
+  border: 0;                              /* the rest of the site is borderless */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 18px;
+  margin: 10px 0;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--ink-head);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+#searchResults li:hover,
+#searchResults .focus {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  color: var(--accent);
+}
+
+/* ---- 404 ---------------------------------------------------------------- */
+
+.not-found {
+  font-family: var(--font-serif);
+  color: var(--ink-head);
+}
