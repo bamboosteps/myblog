@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://bamboosteps.github.io/myblog/'
 locale = 'zh-CN'
 defaultContentLanguage = 'zh-cn'
 title = '嵌入式笔记'
